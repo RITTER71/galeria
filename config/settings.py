@@ -30,14 +30,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-change-me")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "0") == "1"
 
-ALLOWED_HOSTS = [
-    h.strip()
-    for h in os.environ.get(
-        "ALLOWED_HOSTS",
-        "localhost,127.0.0.1,galeria.onrender.com,galeria",
-    ).split(",")
-    if h.strip()
-]
+# Cambia el bloque de ALLOWED_HOSTS por este:
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
