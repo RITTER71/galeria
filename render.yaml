@@ -4,6 +4,7 @@ services:
     env: python
     plan: free
     buildCommand: ./build.sh
+    # Must match your Django project package (this repo uses `config`, not `app`)
     startCommand: gunicorn config.wsgi:application
     envVars:
       - key: DEBUG

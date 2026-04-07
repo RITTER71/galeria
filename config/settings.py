@@ -15,6 +15,8 @@ import os
 
 import dj_database_url
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -86,10 +88,28 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
+# Database configuration
+db_url = os.environ.get("DATABASE_URL")
 
+if db_url:
+    # Si la URL viene como string de bytes b'...' la limpiamos
+    if isinstance(db_url, str) and db_url.startswith("b'") and db_url.endswith("'"):
+        db_url = db_url[2:-1]
+    
+    DATABASES = {
+        'default': dj_database_url.parse(db_url, conn_max_age=600)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'galeria',
+            'USER': 'ritter',
+            'PASSWORD': '1234',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -131,6 +151,10 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
