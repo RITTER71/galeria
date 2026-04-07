@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: galeria
+    env: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: "0"
+      - key: ALLOWED_HOSTS
+        value: "galeria.onrender.com,galeria"
+      # Set SECRET_KEY in Render dashboard (do not commit real secrets)
+      # Set CLOUDINARY_URL in Render dashboard for media uploads
+
