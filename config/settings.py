@@ -90,9 +90,10 @@ if db_url:
     if isinstance(db_url, str) and db_url.startswith("b'") and db_url.endswith("'"):
         db_url = db_url[2:-1]
     
-    DATABASES = {
-        'default': dj_database_url.parse(db_url, conn_max_age=600)
-    }
+    import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config(default='postgresql://galeria_user:Uj40KPuwL3MZLEPv14x7w1kKS9HElmGS@dpg-d7a8h49r0fns73au18u0-a.oregon-postgres.render.com/galeria_fsk3')
+}
 else:
     DATABASES = {
         'default': {
