@@ -81,7 +81,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 # Database configuration
 db_url = os.environ.get("DATABASE_URL")
 
@@ -91,22 +90,14 @@ if db_url:
         db_url = db_url[2:-1]
     
     import dj_database_url
-DATABASES = {
-    'default': dj_database_url.config(default='postgresql://galeria_user:Uj40KPuwL3MZLEPv14x7w1kKS9HElmGS@dpg-d7a8h49r0fns73au18u0-a.oregon-postgres.render.com/galeria_fsk3')
-}
-else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'galeria',
-            'USER': 'ritter',
-            'PASSWORD': '1234',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
+        'default': dj_database_url.config(default=db_url)
     }
-
-
+else:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default='postgresql://galeria_user:Uj40KPuwL3MZLEPv14x7w1kKS9HElmGS@dpg-d7a8h49r0fns73au18u0-a.oregon-postgres.render.com/galeria_fsk3')
+    }
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
